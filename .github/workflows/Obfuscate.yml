@@ -1,39 +1,39 @@
-name   名字: Build Obfuscate BPB Panel名称：构建模糊BPB面板
+name: Build Obfuscate BPB Panel
 
-on   在:
-  push   推:
-    branches   分支机构:
-      - main   ——主要
-  schedule   时间表:
-        #每天凌晨1点跑步# Runs everyday at 1:00 AM#每天凌晨1点跑步
+on:
+  push:
+    branches:
+      - main
+  schedule:
+        # Runs everyday at 1:00 AM
         - cron: "0 1 * * *"
 
-permissions   权限:
-  contents   内容: write   内容:写
+permissions:
+  contents: write
 
-jobs   工作:
-  build   构建:
-    runs-on   运行在: ubuntu-latest   上运行:ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-    steps   步骤:
-      - name   名字: Check out the code- name：检查代码
-        uses   使用: actions/checkout@v4用途:行动/ checkout@v4
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
 
-      - name   名字: Set up Node.js—name：设置Node.js
-        uses   使用: actions/setup-node@v4用途:行动/ setup-node@v4
-        with   与:
-          node-version   节点信息: "latest"   “最新”
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
 
-      - name   名字: Install dependencies—name：安装依赖项
-        run   运行: |
-          npm install -g javascript-obfuscator安装-g javascript-obfuscator
+      - name: Install dependencies
+        run: |
+          npm install -g javascript-obfuscator
 
-      - name   名字: Clone BPB workjs—name：克隆BPB workjs
-        run   运行: |
-          wget -O origin.js https://raw.githubusercontent.com/bia-pain-bache/BPB-Worker-Panel/refs/heads/main/build/unobfuscated-worker.jsjs https://raw.githubusercontent.com/bia-pain-bache/BPB-Worker-Panel/refs/heads/main/build/unobfuscated-worker.js
+      - name: Clone BPB workjs
+        run: |
+          wget -O origin.js https://raw.githubusercontent.com/bia-pain-bache/BPB-Worker-Panel/refs/heads/main/build/unobfuscated-worker.js
       
-      - name   名字: Obfuscate BPB worker js
-        run   运行: |
+      - name: Obfuscate BPB worker js
+        run: |
           javascript-obfuscator origin.js --output _worker.js \
           --compact true \
           --control-flow-flattening true \
